@@ -27,8 +27,10 @@ limitations under the License.
                   <input type="text" class="form-control" id="skillName" @input="updateSkillId"
                          v-model="skillInternal.name" v-focus
                           aria-required="true"
-                          data-cy="skillName">
-                  <small class="form-text text-danger" data-cy="skillNameError">{{ errors[0] }}</small>
+                          data-cy="skillName"
+                          aria-describedby="skillNameError"
+                          :aria-invalid="errors && errors.length > 0">
+                  <small class="form-text text-danger" data-cy="skillNameError" id="skillNameError">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
             </div>
@@ -38,15 +40,17 @@ limitations under the License.
             </div>
             <div class="col-12 col-lg-2 mt-2 mt-lg-0">
               <div class="form-group">
-                <label>Version
+                <label for="skillVersion">Version
                   <inline-help
                     msg="An optional version for this skill to allow filtering of available skills for different versions of an application"/>
                 </label>
                 <ValidationProvider rules="optionalNumeric|min_value:0|maxSkillVersion|maxVersion" v-slot="{errors}" name="Version">
-                  <input class="form-control" type="text"
+                  <input class="form-control" type="text" id="skillVersion"
                          v-model="skillInternal.version" :disabled="isEdit"
-                        data-cy="skillVersion"/>
-                  <small class="form-text text-danger" data-cy="skillVersionError">{{ errors[0] }}</small>
+                        data-cy="skillVersion"
+                        aria-describedby="skillVersionError"
+                        :aria-invalid="errors && errors.length > 0"/>
+                  <small class="form-text text-danger" data-cy="skillVersionError" id="skillVersionError">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
             </div>
@@ -57,22 +61,28 @@ limitations under the License.
           <div class="row mt-3">
             <div class="col-12 col-lg">
               <div class="form-group mb-1">
-                <label>* Point Increment</label>
+                <label for="pointIncrement">* Point Increment</label>
                 <ValidationProvider rules="optionalNumeric|required|min_value:1|maxPointIncrement" v-slot="{errors}" name="Point Increment">
                   <input class="form-control" type="text"  v-model="skillInternal.pointIncrement"
                          aria-required="true"
-                          data-cy="skillPointIncrement"/>
-                  <small class="form-text text-danger" data-cy="skillPointIncrementError">{{ errors[0] }}</small>
+                          data-cy="skillPointIncrement"
+                          id="pointIncrement"
+                          aria-describedby="skillPointIncrementError"
+                          :aria-invalid="errors && errors.length > 0"/>
+                  <small class="form-text text-danger" data-cy="skillPointIncrementError" id="skillPointIncrementError">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
             </div>
             <div class="col-12 col-lg">
               <div class="form-group mt-2 mt-lg-0">
-                <label>* Occurrences to Completion</label>
+                <label for="numPerformToCompletion">* Occurrences to Completion</label>
                 <ValidationProvider vid="totalOccurrences" rules="optionalNumeric|required|min_value:1|maxNumPerformToCompletion|moreThanMaxWindowOccurrences:@windowMaxOccurrence" v-slot="{errors}" name="Occurrences to Completion" tag="div">
                   <input class="form-control" type="text" v-model="skillInternal.numPerformToCompletion"
-                         data-cy="numPerformToCompletion" aria-required="true"/>
-                  <small class="form-text text-danger" data-cy="skillOccurrencesError">{{ errors[0] }}</small>
+                         data-cy="numPerformToCompletion" aria-required="true"
+                          id="numPerformToCompletion"
+                          aria-describedby="skillOccurrencesError"
+                          :aria-invalid="errors && errors.length > 0"/>
+                  <small class="form-text text-danger" data-cy="skillOccurrencesError" id="skillOccurrencesError">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
             </div>
@@ -107,24 +117,28 @@ limitations under the License.
                       <div class="input-group">
                         <input class="form-control d-inline" type="text" v-model="skillInternal.pointIncrementIntervalHrs"
                                value="8" :disabled="!skillInternal.timeWindowEnabled"
-                               ref="timeWindowHours" data-cy="timeWindowHours"/>
+                               ref="timeWindowHours" data-cy="timeWindowHours"
+                                id="timeWindowHours" aria-label="time window hours"
+                                aria-describedby="skillHoursError" :aria-invalid="errors && errors.length > 0"/>
                         <div class="input-group-append">
                           <span class="input-group-text" id="hours-append">Hours</span>
                         </div>
                       </div>
-                      <small class="form-text text-danger" data-cy="skillHoursError">{{ errors[0] }}</small>
+                      <small class="form-text text-danger" data-cy="skillHoursError" id="skillHoursError">{{ errors[0] }}</small>
                     </ValidationProvider>
                   </div>
                   <div class="col-12 col-sm">
                     <ValidationProvider rules="optionalNumeric|required|min_value:0|max_value:59|minutesMaxTimeWindow:@timeWindowHours|cantBe0IfHours0" vid="timeWindowMinutes" v-slot="{errors}" name="Minutes">
                       <div class="input-group">
                         <input class="form-control d-inline"  type="text" v-model="skillInternal.pointIncrementIntervalMins"
-                               value="0" :disabled="!skillInternal.timeWindowEnabled" ref="timeWindowMinutes" data-cy="timeWindowMinutes"/>
+                               value="0" :disabled="!skillInternal.timeWindowEnabled" ref="timeWindowMinutes"
+                               data-cy="timeWindowMinutes" aria-label="time window minutes"
+                                aria-describedby="skillMinutesError" :aria-invalid="errors && errors.length > 0"/>
                         <div class="input-group-append">
                           <span class="input-group-text" id="minutes-append">Minutes</span>
                         </div>
                       </div>
-                      <small class="form-text text-danger" data-cy="skillMinutesError">{{ errors[0] }}</small>
+                      <small class="form-text text-danger" data-cy="skillMinutesError" id="skillMinutesError">{{ errors[0] }}</small>
                     </ValidationProvider>
                   </div>
                 </div>
@@ -134,14 +148,15 @@ limitations under the License.
             <div class="col-12 col-lg">
               <ValidationProvider vid="windowMaxOccurrence" rules="optionalNumeric|min_value:1|lessThanTotalOccurrences:@totalOccurrences|maxNumPointIncrementMaxOccurrences" v-slot="{errors}" name="Window's Max Occurrences">
                 <div class="form-group">
-                  <label>Window's Max Occurrences
+                  <label for="maxOccurrences">Window's Max Occurrences
                     <inline-help
                       msg="Once this Max Occurrences has been reached, points will not be incremented until outside of the configured Time Window."/>
                   </label>
 
                     <input class="form-control" type="text" v-model="skillInternal.numPointIncrementMaxOccurrences"
-                           :disabled="!skillInternal.timeWindowEnabled" data-cy="maxOccurrences"/>
-                    <small class="form-text text-danger" data-cy="skillMaxOccurrencesError">{{ errors[0] }}</small>
+                           :disabled="!skillInternal.timeWindowEnabled" data-cy="maxOccurrences" id="maxOccurrences"
+                            aria-describedby="skillMaxOccurrencesError" :aria-invalid="errors && errors.length > 0"/>
+                    <small class="form-text text-danger" data-cy="skillMaxOccurrencesError" id="skillMaxOccurrencesError">{{ errors[0] }}</small>
                 </div>
               </ValidationProvider>
             </div>
@@ -161,11 +176,11 @@ limitations under the License.
           </div>
 
           <div class="form-group mt-3">
-            <label>Help URL/Path
+            <label for="skillHelpUrl">Help URL/Path
               <inline-help
                 msg="If project level 'Root Help Url' is specified then this path will be relative to 'Root Help Url'"/>
             </label>
-            <input class="form-control" type="text" v-model="skillInternal.helpUrl"/>
+            <input class="form-control" type="text" v-model="skillInternal.helpUrl" id="skillHelpUrl"/>
           </div>
 
           <p v-if="invalid && overallErrMsg" class="text-center text-danger">***{{ overallErrMsg }}***</p>
