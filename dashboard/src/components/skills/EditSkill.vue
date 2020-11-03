@@ -28,7 +28,7 @@ limitations under the License.
                          v-model="skillInternal.name" v-focus
                           aria-required="true"
                           data-cy="skillName"
-                          aria-describedby="skillNameError"
+                          aria-errormessage="skillNameError"
                           :aria-invalid="errors && errors.length > 0">
                   <small class="form-text text-danger" data-cy="skillNameError" id="skillNameError">{{ errors[0] }}</small>
                 </ValidationProvider>
@@ -48,7 +48,7 @@ limitations under the License.
                   <input class="form-control" type="text" id="skillVersion"
                          v-model="skillInternal.version" :disabled="isEdit"
                         data-cy="skillVersion"
-                        aria-describedby="skillVersionError"
+                        aria-errormessage="skillVersionError"
                         :aria-invalid="errors && errors.length > 0"/>
                   <small class="form-text text-danger" data-cy="skillVersionError" id="skillVersionError">{{ errors[0] }}</small>
                 </ValidationProvider>
@@ -67,7 +67,7 @@ limitations under the License.
                          aria-required="true"
                           data-cy="skillPointIncrement"
                           id="pointIncrement"
-                          aria-describedby="skillPointIncrementError"
+                          aria-errormessage="skillPointIncrementError"
                           :aria-invalid="errors && errors.length > 0"/>
                   <small class="form-text text-danger" data-cy="skillPointIncrementError" id="skillPointIncrementError">{{ errors[0] }}</small>
                 </ValidationProvider>
@@ -80,7 +80,7 @@ limitations under the License.
                   <input class="form-control" type="text" v-model="skillInternal.numPerformToCompletion"
                          data-cy="numPerformToCompletion" aria-required="true"
                           id="numPerformToCompletion"
-                          aria-describedby="skillOccurrencesError"
+                          aria-errormessage="skillOccurrencesError"
                           :aria-invalid="errors && errors.length > 0"/>
                   <small class="form-text text-danger" data-cy="skillOccurrencesError" id="skillOccurrencesError">{{ errors[0] }}</small>
                 </ValidationProvider>
@@ -119,7 +119,7 @@ limitations under the License.
                                value="8" :disabled="!skillInternal.timeWindowEnabled"
                                ref="timeWindowHours" data-cy="timeWindowHours"
                                 id="timeWindowHours" aria-label="time window hours"
-                                aria-describedby="skillHoursError" :aria-invalid="errors && errors.length > 0"/>
+                                aria-errormessage="skillHoursError" :aria-invalid="errors && errors.length > 0"/>
                         <div class="input-group-append">
                           <span class="input-group-text" id="hours-append">Hours</span>
                         </div>
@@ -133,7 +133,7 @@ limitations under the License.
                         <input class="form-control d-inline"  type="text" v-model="skillInternal.pointIncrementIntervalMins"
                                value="0" :disabled="!skillInternal.timeWindowEnabled" ref="timeWindowMinutes"
                                data-cy="timeWindowMinutes" aria-label="time window minutes"
-                                aria-describedby="skillMinutesError" :aria-invalid="errors && errors.length > 0"/>
+                                aria-errormessage="skillMinutesError" :aria-invalid="errors && errors.length > 0"/>
                         <div class="input-group-append">
                           <span class="input-group-text" id="minutes-append">Minutes</span>
                         </div>
@@ -155,7 +155,7 @@ limitations under the License.
 
                     <input class="form-control" type="text" v-model="skillInternal.numPointIncrementMaxOccurrences"
                            :disabled="!skillInternal.timeWindowEnabled" data-cy="maxOccurrences" id="maxOccurrences"
-                            aria-describedby="skillMaxOccurrencesError" :aria-invalid="errors && errors.length > 0"/>
+                            aria-errormessage="skillMaxOccurrencesError" :aria-invalid="errors && errors.length > 0"/>
                     <small class="form-text text-danger" data-cy="skillMaxOccurrencesError" id="skillMaxOccurrencesError">{{ errors[0] }}</small>
                 </div>
               </ValidationProvider>
