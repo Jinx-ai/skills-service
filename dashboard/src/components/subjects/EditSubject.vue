@@ -16,7 +16,7 @@ limitations under the License.
 <template>
   <ValidationObserver ref="observer" v-slot="{invalid}" slim>
     <b-modal :id="subjectInternal.subjectId" size="xl" :title="title" v-model="show" :no-close-on-backdrop="true"
-             header-bg-variant="info" header-text-variant="light" no-fade>
+             header-bg-variant="hc" header-text-variant="light" no-fade>
         <b-container fluid>
           <div v-if="displayIconManager === false">
               <div class="media mb-3">
@@ -30,7 +30,8 @@ limitations under the License.
                              v-model="subjectInternal.name" v-on:input="updateSubjectId"
                              v-focus aria-required="true"
                               :aria-invalid="errors && errors.length > 0"
-                              aria-errormessage="subjectNameError">
+                              aria-errormessage="subjectNameError"
+                              aria-describedby="subjectNameError">
                       <small class="form-text text-danger" id="subjectNameError">{{ errors[0] }}</small>
                     </ValidationProvider>
                   </div>

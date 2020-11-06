@@ -28,7 +28,8 @@ limitations under the License.
                   <input v-focus class="form-control" id="badgeName" type="text" v-model="badgeInternal.name"
                          @input="updateBadgeId" aria-required="true" data-cy="badgeName"
                           :aria-invalid="errors && errors.length > 0"
-                          aria-errormessage="badgeNameError"/>
+                          aria-errormessage="badgeNameError"
+                          aria-describedby="badgeNameError"/>
                   <small class="form-text text-danger" v-show="errors[0]" data-cy="badgeNameError" id="badgeNameError">{{ errors[0] }}
                   </small>
                 </ValidationProvider>
