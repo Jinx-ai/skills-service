@@ -16,7 +16,7 @@ limitations under the License.
 <template>
   <ValidationObserver ref="observer" v-slot="{invalid}" slim>
     <b-modal :id="skillInternal.skillId" size="xl" :title="title" v-model="show" :no-close-on-backdrop="true"
-             header-bg-variant="info" header-text-variant="light" no-fade role="dialog">
+             header-bg-variant="info" header-text-variant="light" no-fade role="dialog" @hide="publishHidden">
         <b-container fluid>
           <loading-container :is-loading="isLoading">
           <div class="row">
@@ -320,8 +320,12 @@ limitations under the License.
       },
     },
     methods: {
-      close() {
+      close(e) {
         this.show = false;
+        this.publishHidden(e);
+      },
+      publishHidden(e) {
+        this.$emit('hidden', { updated: this.isEdit, ...e });
       },
       setupValidation() {
         const self = this;
@@ -434,8 +438,8 @@ limitations under the License.
               this.skillInternal.skillId = InputSanitizer.sanitize(this.skillInternal.skillId);
               this.skillInternal.helpUrl = InputSanitizer.sanitize(this.skillInternal.helpUrl);
               this.skillInternal = { subjectId: this.subjectId, ...this.skillInternal };
-              this.$emit('skill-saved', this.skillInternal);
-              this.close();
+              this.$emit('skill-saved', { isEdit: this.isEdit, ...this.skillInternal });
+              this.close({ saved: true });
             }
           });
       },
